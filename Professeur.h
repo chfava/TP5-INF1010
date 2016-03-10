@@ -15,7 +15,7 @@ class Professeur :
 {
 public:
 	Professeur();
-	Professeur(const std::string& matricule, const std::string& nom, const std::string& prenom, unsigned int age, std::vector<std::string> ecoles);
+	Professeur(const std::string& matricule, const std::string& nom, const std::string& prenom, unsigned int age, std::list<std::string> ecoles);
 	~Professeur();
 
 	std::list<std::string> obtenirEcole() const;

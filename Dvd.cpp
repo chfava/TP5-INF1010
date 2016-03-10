@@ -6,8 +6,8 @@ Dvd::Dvd()
 {
 }
 
-Dvd::Dvd(const std::string & cote, const std::string & titre, unsigned int annee, unsigned int ageMin, unsigned int nbExemplaires, std::string const & realisateur, std::vector<std::string> acteurs) :
-	ObjetEmpruntable(cote, titre, annee, ageMin, nbExemplaires), realisateur_(realisateur), vecActeurs_(acteurs)
+Dvd::Dvd(const std::string & cote, const std::string & titre, unsigned int annee, unsigned int ageMin, unsigned int nbExemplaires, std::string const & realisateur, std::list<std::string> acteurs) :
+	ObjetEmpruntable(cote, titre, annee, ageMin, nbExemplaires), realisateur_(realisateur), listActeurs_(acteurs)
 
 {
 
@@ -23,9 +23,9 @@ std::string Dvd::obtenirRealisateur() const
 	return realisateur_;
 }
 
-std::vector<std::string> Dvd::obtenirActeur() const
+std::list<std::string> Dvd::obtenirActeur() const
 {
-	return vecActeurs_;
+	return listActeurs_;
 }
 
 void Dvd::modifierRealisateur(std::string const & realisateur)
@@ -35,17 +35,17 @@ void Dvd::modifierRealisateur(std::string const & realisateur)
 
 void Dvd::ajouterActeur(std::string const & acteur)
 {
-	vecActeurs_.push_back(acteur);
+	listActeurs_.push_back(acteur);
 }
 
 void Dvd::retirerActeur(std::string const & acteur)
 {
-	for (int i = 0; i < vecActeurs_.size(); i++)
+	list<string>::iterator pos;
+	for (pos = listActeurs_.begin(); pos != listActeurs_.end(); pos++)
 	{
-		if (vecActeurs_[i] == acteur)
+		if (*pos == acteur)
 		{
-			vecActeurs_[i] = vecActeurs_.back();
-			vecActeurs_.pop_back();
+			listActeurs_.erase(pos);
 		}
 	}
 }
@@ -55,9 +55,10 @@ bool Dvd::recherche(const std::string & motsCle) const
 {
 	bool present = false;
 	std::size_t trouverRealisateur = convertirMinuscule(realisateur_).find(convertirMinuscule(motsCle));
-	for (int i = 0; i < vecActeurs_.size(); i++)
+	list<string>::const_iterator pos;
+	for (pos = listActeurs_.begin(); pos != listActeurs_.end(); pos++)
 	{
-		std::size_t trouveActeur = convertirMinuscule(vecActeurs_[i]).find(convertirMinuscule(motsCle));
+		std::size_t trouveActeur = convertirMinuscule(*pos).find(convertirMinuscule(motsCle));
 		present = present || (trouveActeur != string::npos);
 	}
 	//Utilisation du demasquage pour appeler la méthode de la classe mère
@@ -76,9 +77,10 @@ ostream & operator<<(ostream & o, const Dvd & dvd)
 		<< " Realisateur : " << dvd.realisateur_
 		<< "; Acteurs : ";
 	//affichage des acteurs
-	for (int i = 0; i < dvd.vecActeurs_.size(); i++)
+	list<string>::const_iterator pos;
+	for (pos = dvd.listActeurs_.begin(); pos != dvd.listActeurs_.end(); pos++)
 		{
-			o << dvd.vecActeurs_[i] << "; ";
+			o << *pos << "; ";
 		}
 
 	return o << endl;

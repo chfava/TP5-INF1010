@@ -1,7 +1,7 @@
 #ifndef DVD_H
 #define DVD_H
 #include "ObjetEmpruntable.h"
-#include <vector>
+#include <list>
 
 class Dvd :
 	public ObjetEmpruntable
@@ -9,12 +9,12 @@ class Dvd :
 public:
 	Dvd();
 	Dvd(const std::string& cote, const std::string& titre, unsigned int annee,
-		unsigned int ageMin, unsigned int nbExemplaires, std::string const& realisateur, std::vector<std::string> acteurs);
+		unsigned int ageMin, unsigned int nbExemplaires, std::string const& realisateur, std::list<std::string> acteurs);
 
 	virtual ~Dvd();
 
 	std::string obtenirRealisateur() const;
-	std::vector<std::string> obtenirActeur() const;
+	std::list<std::string> obtenirActeur() const;
 
 	void modifierRealisateur(std::string const& realisateur);
 	void ajouterActeur(std::string const& acteur);
@@ -28,7 +28,7 @@ public:
 private:
 	std::string realisateur_;
 	// TODO: modifier le vector par une list listActeurs_
-	std::vector<std::string> vecActeurs_;
+	std::list<std::string> listActeurs_;
 
 };
 #endif

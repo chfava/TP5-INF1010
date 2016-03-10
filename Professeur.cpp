@@ -14,7 +14,7 @@ Professeur::Professeur() : Abonne()
 
 }
 
-Professeur::Professeur(const string& matricule, const string& nom, const string& prenom, unsigned int age, vector<string> ecoles) :
+Professeur::Professeur(const string& matricule, const string& nom, const string& prenom, unsigned int age, list<string> ecoles) :
 	Abonne(matricule, nom, prenom, age), listEcoles_(ecoles)
 {
 
