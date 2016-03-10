@@ -1,7 +1,14 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Fichier: Professeur.h
+//	Auteur(s) : Charles - Olivier Favreau et Stéphanie Leclerc
+//	Date de creation : 10 mars 2016
+//	Date de modification : 10 mars 2016
+//Description : Définition de la classe Professeur
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifndef PROFESSEUR_H
 #define PROFESSEUR_H
 
-
+#include <list>
 #include "Abonne.h"
 class Professeur :
 	public Abonne
@@ -11,15 +18,15 @@ public:
 	Professeur(const std::string& matricule, const std::string& nom, const std::string& prenom, unsigned int age, std::vector<std::string> ecoles);
 	~Professeur();
 
-	std::vector<std::string> obtenirEcole() const;
+	std::list<std::string> obtenirEcole() const;
 	void ajouterEcole(std::string const& ecole);
 	bool retirerEcole(std::string const& ecole);
 	virtual unsigned int obtenirLimiteEmprunt() const;
 	// TODO: modifer l'affichage, trie des acteurs en ordre alphabétique inverse
-	friend std::ostream & operator<<(std::ostream & o, const Professeur & professeur);
+	friend std::ostream & operator<<(std::ostream & o,Professeur & professeur);
 
 private:
 	// TODO: modifier le vector par une list listEcoles_
-	std::vector<std::string> vecEcole_;
+	std::list<std::string> listEcoles_;
 };
 #endif // !PROFESSEUR_H
