@@ -42,6 +42,26 @@ public:
 
 	};
 
+	template <class InputIterator, class OutputIterator, class UnaryPredicate>
+	bool retirerContenu(listeObjets.begin(), listeObjets.end(), UnaryPredicate(Predicate& predicat)) {
+		list <T*>::iterator end = listeObjets.end();
+		bool retire = false;
+		for (list <T*>::iterator it = listeObjets.begin(); it != end && UnaryPredicate(predicat) == true; it++) {
+			listeObjets.erase(it);
+		}
+		return retire; 
+	};
+
+	template <class UnaryPredicate>
+	T* trouverElement(Predicate& predicat) {
+		bool trouve = false; 
+		list <T*>::iterator end = listeObjets.end();
+		for (list <T*>::iterator it = listeObjets.begin(); it != end && UnaryPredicate(predicat) == true; it++) {
+			find_if(listeObjets.begin(), listeObjets.end(), predicat);
+
+		}
+	}
+
 
 
 
