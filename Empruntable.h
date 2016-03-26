@@ -4,21 +4,25 @@
 
 #include <string>
 #include "Abonne.h"
-
-using namespace std;
-
-
+#include "ObjetEmpruntable.h"
 
 class Empruntable
 {
 public:
-	Empruntable(Abonne& abonne){};
-	bool operator()(){};
+	Empruntable(Abonne& abonne, ObjetEmpruntable& objetEmpruntable){
+		*matricule = abonne.obtenirMatricule();
+		*cote = objetEmpruntable.obtenirCote();
+		compteur = 0;
+	};
+
+	bool operator()(){
+		
+	};
 
 private:
-	string matricule;
-	string cote;
-	unsigned int conmpteur;
+	std::string* matricule;
+	std::string* cote;
+	unsigned int compteur;
 	bool booléen;
 
 };
