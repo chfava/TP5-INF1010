@@ -31,7 +31,7 @@ public:
 		std::list<T*>::iterator pos;
 		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
 			if (*pos == objet){
-				listeObjets.erase(pos);
+				pos = listeObjets.erase(pos);
 				return true;
 			}
 		}
