@@ -2,7 +2,6 @@
 #define RECHERCHEOBJETEMPRUNTABLE_H
 
 #include <string>
-#include "Gestionnaire.h"
 #include "ObjetEmpruntable.h"
 
 

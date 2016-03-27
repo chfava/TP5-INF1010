@@ -1,78 +1,84 @@
 #ifndef GESTIONNAIRE_H
 #define GESTIONNAIRE_H
 #include <list>
+#include <algorithm>
+
+#include "Abonne.h"
+#include "Emprunt.h"
+#include "ObjetEmpruntable.h"
 
 template <typename T>
 class Gestionnaire {
 public:
-	template <typename T>
+
 	Gestionnaire() {};
-	template <typename T>
-	Gestionnaire~() {};
-	
-	template <typename T>
+
+	~Gestionnaire() {};
+
+
 	bool ajouterElement(T* objet) {
-		Node* newnode = new Node(objet);
-		list <T*>::iterator end = listeObjets.end();
-		bool ajout = false;
-		for (list<T*>::iterator it = listeObjets.begin(); it != end && it != find (listeObjets.begin(),end, *objet) ; it++) {
-			listeObjets.insert(objet);
-			ajout = true; 
-
-		}
-		return ajout;
-
-	};
-
-	template <typename T>
-	bool retirerElement(T* objet) {
-		list <T*>::iterator end = listeObjets.end();
-		bool trouve = false;
-		bool retrait = false;
-		for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false; it++) {
-			if (it = find(listeObjets.begin(), end, *objet)) {
-				trouve = true; 
-				listeObjets.erase(it);
+		std::list<T*>::iterator pos;
+		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+			if (*pos == objet){
+				return false;
 			}
 		}
-		if (trouve == true) {
-			retrait = true; 
-		}
-		return retrait; 
-
+		listeObjets.push_back(objet);
+		return true;
 	};
 
-	template <class InputIterator, class OutputIterator, class UnaryPredicate>
-	bool retirerContenu(listeObjets.begin(), listeObjets.end(), UnaryPredicate(Predicate& predicat)) {
-		list <T*>::iterator end = listeObjets.end();
-		bool retire = false;
-		for (list <T*>::iterator it = listeObjets.begin(); it != end && UnaryPredicate(predicat) == true; it++) {
-			listeObjets.erase(it);
+	bool retirerElement(T* objet) {
+		std::list<T*>::iterator pos;
+		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+			if (*pos == objet){
+				listeObjets.erase(pos);
+				return true;
+			}
 		}
-		return retire; 
+		return false;
 	};
 
-	template <class UnaryPredicate>
-	T* trouverElement(Predicate& predicat) {
-		bool trouve = false; 
-		list <T*>::iterator end = listeObjets.end();
-		for (list <T*>::iterator it = listeObjets.begin(); it != end && UnaryPredicate(predicat) == true; it++) {
-			find_if(listeObjets.begin(), listeObjets.end(), predicat);
-
+	template <typename predicate>
+	bool retirerContenu(predicate& condition) {
+	bool elementRetiré;
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (condition(*pos)){
+			pos = listeObjets.erase(pos);
+			elementRetiré = true;
 		}
 	}
+	return elementRetiré;
+};
 
+template <typename predicate>
+T* trouverElement(predicate& condition) {
+	return *(find_if(listeObjets.begin(), listeObjets.end(), condition));
+}
 
+bool trouverElement(T objet){
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (*pos == objet){
+			return true;
+		}
+	}
+	return false;
+}
 
-
-
-
-
-
-	
-
+template <typename predicate>
+std::list<T*> trouverContenu(predicate condition){
+	std::list <T*> liste;
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (condition){
+			liste.push_back(*pos);
+		}
+	}
+	return liste;
+}
 
 private: 
-	list <*T> listeObjets;
+	list <T*> listeObjets;
 };
 #endif
