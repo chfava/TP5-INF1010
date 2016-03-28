@@ -3,7 +3,7 @@
 using namespace std;
 
 Bibliotheque::Bibliotheque(){
-
+	
 };
 
 Bibliotheque::~Bibliotheque(){
@@ -11,7 +11,9 @@ Bibliotheque::~Bibliotheque(){
 };
 
 Abonne* Bibliotheque::trouverAbonne(const std::string& matricule) const{
-
+	Abonne abonne1;
+	abonne1.modifierMatricule(matricule);
+	MemeObjet<Abonne, Abonne> (abonne1&);
 };
 
 ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{

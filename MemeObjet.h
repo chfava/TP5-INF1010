@@ -10,7 +10,7 @@ template<typename T, typename P>
 class MemeObjet{
 
 public:
-	MemeObjet(ObjetEmpruntable& objet1){
+	MemeObjet(P& objet1){
 		*objet1_ = objet1;
 	};
 
