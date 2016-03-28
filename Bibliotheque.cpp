@@ -29,12 +29,13 @@ bool Bibliotheque::retirerAbonne(std::string& matricule){
 	gestAbonnes_.retirerContenu(memeObjet);
 };
 
-ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
-
+ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(std::string& cote) const{
+	MemeObjet<ObjetEmpruntable, string> memeObjet(cote);
+	return gestObj_.trouverElement(memeObjet);
 };
 
 bool Bibliotheque::ajouterObjetEmpruntable(ObjetEmpruntable* objet){
-
+	return gestObj_.ajouterElement(objet);
 };
 
 bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){

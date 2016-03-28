@@ -29,7 +29,7 @@ public:
 
 	Abonne* trouverAbonne(std::string& matricule) const;
 
-	ObjetEmpruntable* trouverObjetEmpruntable(const std::string& cote) const;
+	ObjetEmpruntable* trouverObjetEmpruntable(std::string& cote) const;
 
 	std::string obtenirClasseObjet(std::string const& cote) const;
 
