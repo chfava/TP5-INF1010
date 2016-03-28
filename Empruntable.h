@@ -6,13 +6,13 @@
 #include "Abonne.h"
 #include "ObjetEmpruntable.h"
 
+//À terminer !
+
 class Empruntable
 {
 public:
-	Empruntable(Abonne& abonne, ObjetEmpruntable& objetEmpruntable){
-		*matricule = abonne.obtenirMatricule();
-		*cote = objetEmpruntable.obtenirCote();
-		compteur = 0;
+	Empruntable(){
+		
 	};
 
 	bool operator()(){
