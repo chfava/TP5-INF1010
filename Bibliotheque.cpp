@@ -16,18 +16,14 @@ Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
 	return gestAbonnes_.trouverElement(memeObjet);
 };
 
-ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
-
-};
-
-std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
-
-};
-
 bool Bibliotheque::ajouterAbonne(Abonne& abonne){
 
 };
 bool Bibliotheque::retirerAbonne(const std::string& matricule){
+
+};
+
+ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
 
 };
 
@@ -38,6 +34,7 @@ bool Bibliotheque::ajouterObjetEmpruntable(ObjetEmpruntable* objet){
 bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){
 
 };
+
 
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
 	RechercheObjetEmpruntable foncteur;
@@ -82,4 +79,12 @@ istream& operator>>(istream& in, const Bibliotheque& biblio){
 	in >> mot;
 	biblio.rechercherObjetEmpruntable(mot);
 	return in;
+};
+
+std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
+
+};
+
+map<string, Emprunt*> Bibliotheque::trierEmprunt(Abonne * abonne) const{
+
 };
