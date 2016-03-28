@@ -15,6 +15,8 @@ Description: la classe qui fait le lien entre toutes les autres classes
 #include "Emprunt.h"
 #include "Gestionnaire.h"
 #include "MemeObjet.h"
+#include "RechercheObjetEmpruntable.h"
+#include "TrieParTitre.h"
 #include <iostream>
 
 

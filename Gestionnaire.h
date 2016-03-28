@@ -2,10 +2,12 @@
 #define GESTIONNAIRE_H
 
 #include <list>
-<<<<<<< HEAD
-#include <cstdlib>
+#include <algorithm>
+#include "Abonne.h"
+#include "Emprunt.h"
+#include "ObjetEmpruntable.h"
 
-template <typename T>
+template <typename T, typename predicate>
 class Gestionnaire {
 
 public: 
@@ -13,149 +15,47 @@ public:
 	~Gestionnaire();
 	bool ajouterElement(T* objet);
 	bool retirerElement(T* objet);
-	bool retirerContenu(T objet);
-	T* trouverElement(T* objet);
+	bool retirerContenu(predicate& predicat);
+	T* trouverElement(predicate& predicat);
 	bool trouverElement(T objet);
-	list <T*> trouverContenu(T* objet);
+	std::list <T*> trouverContenu(predicate& predicat);
 
 private:
-	list <T*> listeObjets;
+	std::list <T*> listeObjets;
 };
 
-template <typename T>
-Gestionnaire <T>::Gestionnaire() {
-};
+template <typename T, typename predicate>
+Gestionnaire<T>::Gestionnaire() {};
 
-template <typename T>
-Gestionnaire <T>::~Gestionnaire() {
-};
+template <typename T, typename predicate>
+Gestionnaire<T>::~Gestionnaire() {};
 
-template <typename T>
-bool Gestionnaire<T>::ajouterElement(T* objet) {
-	Node* newnode = new Node(objet);
-	list <T*>::iterator end = listeObjets.end();
-	bool ajout = false;
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && it != find(listeObjets.begin(), end, *objet); it++) {
-		listeObjets.insert(objet);
-		ajout = true;
-	}
-	return ajout;
-};
-
-template <typename T>
-bool Gestionnaire<T>::retirerElement(T* objet) {
-	list <T*>::iterator end = listeObjets.end();
-	bool trouve = false;
-	bool retrait = false;
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false; it++) {
-		if (it = find(listeObjets.begin(), end, *objet)) {
-			trouve = true;
-			listeObjets.erase(it);
+template <typename T, typename predicate>
+bool Gestionnaire<T, predicate>::ajouterElement(T* objet) {
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (*pos == objet){
+			return false;
 		}
 	}
-	if (trouve == true) {
-		retrait = true;
-	}
-	return retrait;
+	listeObjets.push_back(objet);
+	return true;
 };
 
-template <typename T>
-bool Gestionnaire<T>::retirerContenu(bool predicat) {
-	bool retire = false;
-	bool trouve = false;
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false && predicat == true; it++) {
-		if (it = find(listeObjets.begin(), end, *objet)) {
-			if (listeObjets.retirerElement(&T) == true) {
-				retire = true;
-			}
+template <typename T, typename predicate>
+bool Gestionnaire<T, predicate>::retirerElement(T* objet) {
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (*pos == objet){
+			pos = listeObjets.erase(pos);
+			return true;
 		}
 	}
-	return retire; 
+	return false;
 };
 
-template <typename T>
-T* Gestionnaire<T>::trouverElement(T* objet) {
-	bool trouve = false; 
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false; it++) {
-		if (it = find(listeObjets.begin(), end, *objet)) {
-			trouve = true;
-		}
-	}
-	if (trouve == true) {
-		return objet;
-	}
-	return nullptr;
-};
-
-template <typename T>
-bool Gestionnaire<T>::trouverElement(T objet) {
-	bool trouve = false;
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false; it++) {
-		if (it = find(listeObjets.begin(), end, *objet)) {
-			trouve = true;
-		}
-	}
-	return trouve; 
-};
-
-template <typename T>
-list <T*> Gestionnaire<T>::trouverContenu(bool predicat) {
-	bool trouve = false;
-	for (list<T*>::iterator it = listeObjets.begin(); it != end && trouve == false && predicat == true; it++) {
-		if (it = find(listeObjets.begin(), end, *objet)) {
-			trouve = true;
-			return listeObjets;
-		}
-	} 
-};
-
-
-
-
-
-
-
-#endif
-=======
-#include <algorithm>
-
-#include "Abonne.h"
-#include "Emprunt.h"
-#include "ObjetEmpruntable.h"
-
-template <typename T>
-class Gestionnaire {
-public:
-
-	Gestionnaire() {};
-
-	~Gestionnaire() {};
-
-
-	bool ajouterElement(T* objet) {
-		std::list<T*>::iterator pos;
-		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-			if (*pos == objet){
-				return false;
-			}
-		}
-		listeObjets.push_back(objet);
-		return true;
-	};
-
-	bool retirerElement(T* objet) {
-		std::list<T*>::iterator pos;
-		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-			if (*pos == objet){
-				pos = listeObjets.erase(pos);
-				return true;
-			}
-		}
-		return false;
-	};
-
-	template <typename predicate>
-	bool retirerContenu(predicate& condition) {
+template <typename T, typename predicate>
+bool Gestionnaire<T, predicate>::retirerContenu(predicate& condition) {
 	bool elementRetiré;
 	std::list<T*>::iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
@@ -167,12 +67,13 @@ public:
 	return elementRetiré;
 };
 
-template <typename predicate>
-T* trouverElement(predicate& condition) {
+template <typename T, typename predicate>
+T* Gestionnaire<T, predicate>::trouverElement(predicate& condition) {
 	return *(find_if(listeObjets.begin(), listeObjets.end(), condition));
 }
 
-bool trouverElement(T objet){
+template <typename T, typename predicate>
+bool Gestionnaire<T, predicate>::trouverElement(T objet){
 	std::list<T*>::iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
 		if (*pos == objet){
@@ -182,8 +83,8 @@ bool trouverElement(T objet){
 	return false;
 }
 
-template <typename predicate>
-std::list<T*> trouverContenu(predicate condition){
+template <typename T, typename predicate>
+std::list<T*> Gestionnaire<T, predicate>::trouverContenu(predicate& condition){
 	std::list <T*> liste;
 	std::list<T*>::iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
@@ -194,8 +95,4 @@ std::list<T*> trouverContenu(predicate condition){
 	return liste;
 }
 
-private: 
-	std::list <T*> listeObjets;
-};
 #endif
->>>>>>> origin/master
