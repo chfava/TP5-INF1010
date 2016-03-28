@@ -14,11 +14,11 @@ public:
 		*objet1_ = objet1;
 	};
 
-	bool operator()(T objet2){
+	bool operator()(T& objet2){
 		return (objet2 == *objet1)
 	}
 private:
-	P* objet1_
+	P* objet1_;
 };
 
 #endif

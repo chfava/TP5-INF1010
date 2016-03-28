@@ -195,7 +195,7 @@ std::list<T*> trouverContenu(predicate condition){
 }
 
 private: 
-	list <T*> listeObjets;
+	std::list <T*> listeObjets;
 };
 #endif
 >>>>>>> origin/master

@@ -25,7 +25,7 @@ public:
 	Bibliotheque();
 	~Bibliotheque();
 
-	Abonne* trouverAbonne(const std::string& matricule) const;
+	Abonne* trouverAbonne(std::string& matricule) const;
 
 	ObjetEmpruntable* trouverObjetEmpruntable(const std::string& cote) const;
 

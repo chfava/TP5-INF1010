@@ -10,10 +10,10 @@ Bibliotheque::~Bibliotheque(){
 
 };
 
-Abonne* Bibliotheque::trouverAbonne(const std::string& matricule) const{
-	Abonne abonne1;
-	abonne1.modifierMatricule(matricule);
-	MemeObjet<Abonne, Abonne> (abonne1&);
+Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
+	MemeObjet<Abonne, string> memeObjet(matricule);
+
+
 };
 
 ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
