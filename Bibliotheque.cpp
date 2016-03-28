@@ -12,8 +12,7 @@ Bibliotheque::~Bibliotheque(){
 
 Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
 	MemeObjet<Abonne, string> memeObjet(matricule);
-
-
+	return gestAbonnes_.trouverElement(memeObjet);
 };
 
 ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{

@@ -54,7 +54,13 @@ public:
 
 template <typename predicate>
 T* trouverElement(predicate& condition) {
-	return *(find_if(listeObjets.begin(), listeObjets.end(), condition));
+	std::list<T*>::iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (condition(*pos)){
+			return *pos;
+		}
+	}
+	return nullptr;
 }
 
 bool trouverElement(T objet){
