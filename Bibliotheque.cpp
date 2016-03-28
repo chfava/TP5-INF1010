@@ -17,10 +17,16 @@ Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
 };
 
 bool Bibliotheque::ajouterAbonne(Abonne& abonne){
-
+	gestAbonnes_.ajouterElement(&abonne);
 };
-bool Bibliotheque::retirerAbonne(const std::string& matricule){
 
+bool Bibliotheque::retirerAbonne(std::string& matricule){
+	MemeObjet<Abonne, string> memeObjet(matricule);
+	bool retourEmprunt = true;
+	while (retourEmprunt){
+		retourEmprunt = gestEmprunts_.retirerContenu(memeObjet);
+	}
+	gestAbonnes_.retirerContenu(memeObjet);
 };
 
 ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{

@@ -34,7 +34,7 @@ public:
 	std::string obtenirClasseObjet(std::string const& cote) const;
 
 	bool ajouterAbonne(Abonne& abonne);
-	bool retirerAbonne(const std::string& matricule);	
+	bool retirerAbonne(std::string& matricule);	
 
 	bool ajouterObjetEmpruntable(ObjetEmpruntable* objet);
 	
