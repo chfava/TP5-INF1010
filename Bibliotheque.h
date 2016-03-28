@@ -38,7 +38,7 @@ public:
 
 	bool ajouterObjetEmpruntable(ObjetEmpruntable* objet);
 	
-	bool retirerObjetEmpruntable(const std::string& cote);
+	bool retirerObjetEmpruntable(std::string& cote);
 	void rechercherObjetEmpruntable(const std::string& str) const;
 
 	

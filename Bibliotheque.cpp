@@ -38,8 +38,14 @@ bool Bibliotheque::ajouterObjetEmpruntable(ObjetEmpruntable* objet){
 	return gestObj_.ajouterElement(objet);
 };
 
-bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){
-
+bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
+	MemeObjet<ObjetEmpruntable, string> memeObjet(cote);
+	
+	if (gestObj_.trouverElement(memeObjet)->obtenirNbDisponibles() == gestObj_.trouverElement(memeObjet)->obtenirNbExemplaires()){
+		return gestObj_.retirerContenu(memeObjet);
+	}
+	else
+		return false;
 };
 
 
