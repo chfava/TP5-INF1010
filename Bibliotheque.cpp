@@ -1,4 +1,5 @@
 #include "Bibliotheque.h"
+#include "RechercheObjetEmpruntable.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){
 };
 
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
+	RechercheObjetEmpruntable foncteur;
 
 };
 
@@ -56,21 +58,28 @@ void Bibliotheque::infoAbonne(const std::string& matricule) const{
 };
 
 Bibliotheque& Bibliotheque::operator+=(Abonne* abonne){
-
+	ajouterAbonne(*abonne);
+	return *this;
 };
 
 Bibliotheque& Bibliotheque::operator+=(ObjetEmpruntable* obj){
-
+	ajouterObjetEmpruntable(obj);
+	return *this;
 };
 
 Bibliotheque& Bibliotheque::operator-=(Abonne* abonne){
-
+	retirerAbonne(abonne->obtenirMatricule());
+	return *this;
 };
 
 Bibliotheque& Bibliotheque::operator-=(ObjetEmpruntable* obj){
-
+	retirerObjetEmpruntable(obj->obtenirCote());
+	return *this;
 };
 
 istream& operator>>(istream& in, const Bibliotheque& biblio){
-
+	string mot;
+	in >> mot;
+	biblio.rechercherObjetEmpruntable(mot);
+	return in;
 };
