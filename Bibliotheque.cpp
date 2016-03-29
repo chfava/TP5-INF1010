@@ -107,7 +107,34 @@ bool Bibliotheque::retourner(const std::string& matricule, const std::string& co
 };
 
 void Bibliotheque::infoAbonne(const std::string& matricule) const{
+	string* ptr = new string(matricule);
+	MemeObjet<Abonne, string> predicat(ptr);
+	//On doit vérifier que tous les vecteurs sont parcourus
+	Abonne* ab = gestAbonnes_.trouverElement(predicat);
 
+	if (ab != nullptr)
+	{
+		if (typeid(*ab).name() == typeid(Abonne).name()) {
+			const Abonne  *abonne = dynamic_cast <const Abonne*> (ab);
+			cout << *abonne;
+		}
+		if (typeid(*ab).name() == typeid(Etudiant).name()) {
+			const Etudiant *etudiant = dynamic_cast <const Etudiant*> (ab);
+			cout << *etudiant;
+		}
+		if (typeid(*ab).name() == typdeid(EtudiantBaccalaureat).name()) {
+			const EtudiantBaccalaureat *etudiantBac = dynamic_cast <const EtudiantBaccalaureat*> (ab);
+			cout << *etudiantBac;
+		}
+		if (typeid(*ab).name() == typeid(Professeur).name()) {
+			const Professeur *professeur = dynamic_cast <const Professeur*> (ab);
+			cout << *professeur;
+		}
+	}
+	else
+	{
+		cout << "Abonne - " << matricule << " - non trouve" << endl;
+	}
 };
 
 Bibliotheque& Bibliotheque::operator+=(Abonne* abonne){

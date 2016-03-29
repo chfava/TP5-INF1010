@@ -18,6 +18,9 @@ Description: la classe qui fait le lien entre toutes les autres classes
 #include "RechercheObjetEmpruntable.h"
 #include "TrieParTitre.h"
 #include "DetruireEmprunt.h"
+#include "Etudiant.h"
+#include "EtudiantBaccalaureat.h"
+#include "Professeur.h"
 #include <iostream>
 
 
