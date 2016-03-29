@@ -18,7 +18,7 @@ Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
 };
 
 bool Bibliotheque::ajouterAbonne(Abonne& abonne){
-	gestAbonnes_.ajouterElement(&abonne);
+	return gestAbonnes_.ajouterElement(&abonne);
 };
 
 bool Bibliotheque::retirerAbonne(std::string& matricule){
