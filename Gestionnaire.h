@@ -81,6 +81,7 @@ public:
 		}
 	}
 	return elementRetiré;
+<<<<<<< HEAD
 	};
 	/************************************************************************************
 	* Fonction: Gestionnaire::trouverElement
@@ -111,9 +112,31 @@ public:
 			if (*pos == objet){
 				return true;
 			}
+=======
+};
+
+template <typename predicate>
+T* trouverElement(predicate& condition)const {
+	std::list<T*>::const_iterator pos;
+	pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
+	if (pos != listeObjets.end())
+		return *pos;
+	else
+		return nullptr;
+	
+}
+
+
+bool trouverElement(T objet1)const {
+	std::list<T*>::const_iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (*pos == objet1){
+			return true;
+>>>>>>> origin/master
 		}
 		return false;
 	}
+<<<<<<< HEAD
 	/***********************************************************************************************************
 	* Fonction: Gestionnaire::trouverContenu
 	* Description: Recherche tous les objets qui vérifient une condition et retourne une liste de pointeurs
@@ -128,6 +151,18 @@ public:
 			if (condition){
 				liste.push_back(*pos);
 			}
+=======
+	return false;
+}
+
+template <typename predicate>
+std::list<T*> trouverContenu(predicate condition)const{
+	std::list <T*> liste;
+	std::list<T*>::const_iterator pos;
+	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
+		if (condition){
+			liste.push_back(*pos);
+>>>>>>> origin/master
 		}
 		return liste;
 	}
