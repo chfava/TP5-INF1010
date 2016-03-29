@@ -1,11 +1,10 @@
-/*
-Fichier: Abonne.h
-Auteur(s): Karim Keddam
-			Mohamed Amine Kibiche
-Date de creation: 8 janvier 2016
-Date de modification: 25 février 2016
-Description: Description de la classe Abonne
-*/
+/****************************************************************************
+* Fichier: Abonne.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 10 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description de la classe Abonne
+****************************************************************************/
 
 #ifndef ABONNE_H
 #define ABONNE_H
