@@ -1,3 +1,10 @@
+/****************************************************************************
+* Fichier: Etudiant.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 10 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description de la classe Etudiant
+****************************************************************************/
 #ifndef ETUDIANT_H
 #define ETUDIANT_H
 #include "Abonne.h"
