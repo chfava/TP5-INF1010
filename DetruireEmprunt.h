@@ -11,14 +11,12 @@
 class DetruireEmprunt
 {
 public:
-	DetruireEmprunt(Gestionnaire<Emprunt> gestionnaire){
-		gestionnaire_ = gestionnaire;
-	};
-	void operator()(){
-		
+	DetruireEmprunt(){};
+	bool operator()(){
+		return true;
 	};
 private:
-	Gestionnaire<Emprunt> gestionnaire_;
+
 };
 
 

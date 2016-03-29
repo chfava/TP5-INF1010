@@ -8,7 +8,8 @@ Bibliotheque::Bibliotheque(){
 };
 
 Bibliotheque::~Bibliotheque(){
-
+	DetruireEmprunt detruireEmprunt();
+	gestEmprunts_.retirerContenu(detruireEmprunt);
 };
 
 Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
