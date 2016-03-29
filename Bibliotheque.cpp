@@ -110,7 +110,7 @@ bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
 	
 };
 
-void Bibliotheque::infoAbonne(std::string& matricule) const{
+void Bibliotheque::infoAbonne(std::string matricule) const{
 	
 	MemeObjet<Abonne, string> predicat(matricule);
 	//On doit vérifier que tous les vecteurs sont parcourus
