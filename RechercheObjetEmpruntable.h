@@ -13,18 +13,20 @@
 
 
 
-class RechercheObjetEmpruntable
-{
+class RechercheObjetEmpruntable {
 public:
-	RechercheObjetEmpruntable(std::string mot){
-		mot_ = mot;
-	};
-	bool operator()(ObjetEmpruntable* objet){
-		return objet->recherche(mot_);
-	}
+	RechercheObjetEmpruntable(const std::string motCle);
+
+	bool operator() (ObjetEmpruntable*  objet);
+
 private:
-	std::string mot_;
+	std::string motCle_;
 };
 
 
+RechercheObjetEmpruntable::RechercheObjetEmpruntable(const std::string motCle) : motCle_(motCle) {};
+
+bool RechercheObjetEmpruntable::operator() (ObjetEmpruntable*  objet) {
+	return objet->recherche(motCle_);
+}
 #endif

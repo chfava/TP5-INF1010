@@ -12,12 +12,11 @@
 #include "Abonne.h"
 #include "ObjetEmpruntable.h"
 
-class Empruntable
-{
+class Empruntable {
 public:
-	Empruntable(const std::string matricule, const std::string cote, unsigned int &compteur, bool &estEmprunte);
-	bool operator () (Emprunt* emprunt);
+	Empruntable(const std::string matricule, const std::string cote, unsigned int& compteur, bool& estEmprunte);
 
+	bool operator() (Emprunt*  emprunt);
 
 private:
 	std::string matricule_;
@@ -27,14 +26,18 @@ private:
 
 };
 
-Empruntable::Empruntable(const std::string matricule, const std::string cote, unsigned int &compteur, bool &estEmprunte) :matricule_(matricule), cote_(cote), compteur_(&compteur), estEmprunte_(&estEmprunte) {};
 
-bool Empruntable::operator () (Emprunt* emprunt) {
+Empruntable::Empruntable(const std::string matricule, const std::string cote, unsigned int& compteur, bool& estEmprunte) :
+	matricule_(matricule), cote_(cote), compteur_(&compteur), estEmprunte_(&estEmprunte) {}
+
+bool Empruntable::operator() (Emprunt* emprunt) {
 	if (*estEmprunte_) {
-		if (matricule_ == *emprunt)
+		if (matricule_ == *emprunt) {
 			(*compteur_)++;
-		if (cote_ == *(emprunt->obtenirObjetEmpruntable()))
-			*estEmprunte_ = false;
+
+			if (cote_ == *(emprunt->obtenirObjetEmpruntable()))
+				*estEmprunte_ = false;
+		}
 	}
 	return *estEmprunte_;
 }

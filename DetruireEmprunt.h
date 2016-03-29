@@ -13,18 +13,18 @@
 
 
 
-//À terminer !
 
-class DetruireEmprunt
-{
+class DetruireEmprunt {
 public:
-	DetruireEmprunt(){};
-	void operator()(Emprunt* emprunt){
-		if (emprunt!=nullptr)
-			delete emprunt;
-	};
+	DetruireEmprunt();
 
+	void operator() (Emprunt* emprunt);
 };
 
+DetruireEmprunt::DetruireEmprunt() {};
 
+void DetruireEmprunt::operator() (Emprunt* emprunt) {
+	if (emprunt != nullptr)
+		delete emprunt;
+}
 #endif
