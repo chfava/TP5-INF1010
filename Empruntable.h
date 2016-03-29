@@ -12,8 +12,6 @@
 #include "Abonne.h"
 #include "ObjetEmpruntable.h"
 
-//À terminer !
-
 class Empruntable
 {
 public:

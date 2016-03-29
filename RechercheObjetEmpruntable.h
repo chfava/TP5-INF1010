@@ -19,8 +19,8 @@ public:
 	RechercheObjetEmpruntable(std::string mot){
 		mot_ = mot;
 	};
-	bool operator()(ObjetEmpruntable& objet){
-		return objet.recherche(mot_);
+	bool operator()(ObjetEmpruntable* objet){
+		return objet->recherche(mot_);
 	}
 private:
 	std::string mot_;
