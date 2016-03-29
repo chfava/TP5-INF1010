@@ -1,3 +1,10 @@
+/****************************************************************************
+* Fichier: MemeObjet.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 25 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description du foncteur MemeObjet
+****************************************************************************/
 #ifndef MEMEOBJET_H
 #define MEMEOBJET_H
 

@@ -1,11 +1,10 @@
-﻿/*
-Fichier: main.cpp
-Auteur(s):  Karim Keddam
-			Mohamed Amine Kibiche
-Date de creation: 11 janvier 2016
-Date de modification: 25 février 2016
-Description: Programme de test
-*/
+﻿/****************************************************************************
+* Fichier: main.cpp
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 10 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Fonction principale: main()
+****************************************************************************/
 #include <vector>
 #include <iostream>
 #include "Bibliotheque.h"
