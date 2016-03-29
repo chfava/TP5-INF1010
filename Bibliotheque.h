@@ -46,7 +46,7 @@ public:
 	void rechercherObjetEmpruntable(const std::string& str) const;
 
 	
-	bool emprunter(const std::string& matricule, const std::string& cote, unsigned int date);
+	bool emprunter(std::string& matricule, std::string& cote, unsigned int date);
 	bool retourner(const std::string& matricule, const std::string& cote);
 
 	void infoAbonne(const std::string& matricule) const;

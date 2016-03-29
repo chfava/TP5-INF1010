@@ -67,7 +67,7 @@ void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
 };
 
 
-bool Bibliotheque::emprunter(const std::string& matricule, const std::string& cote, unsigned int date){
+bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned int date){
 	Abonne* abonne = trouverAbonne(matricule);
 
 	ObjetEmpruntable* objetEmpruntable = trouverObjetEmpruntable(cote);
