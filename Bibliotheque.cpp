@@ -35,8 +35,7 @@ Bibliotheque::~Bibliotheque(){
 * Retour: (Abonne*) un pointeur d'abonne
 **********************************************************************************/
 Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
-	MemeObjet<Abonne, string> memeObjet(matricule);
-	return gestAbonnes_.trouverElement(memeObjet);
+	return gestAbonnes_.trouverElement(MemeObjet<const string>(matricule));
 };
 /*****************************************************************************************
 * Fonction: Bibliotheque::ajouterAbonne
@@ -54,12 +53,9 @@ bool Bibliotheque::ajouterAbonne(Abonne& abonne){
 * Retour: (bool) true si l'abonne a ete retire, false sinon
 ****************************************************************************/
 bool Bibliotheque::retirerAbonne(std::string& matricule){
-	MemeObjet<Abonne, string> memeObjet(matricule);
-	bool retourEmprunt = true;
-	while (retourEmprunt){
-		retourEmprunt = gestEmprunts_.retirerContenu(memeObjet);
-	}
-	gestAbonnes_.retirerContenu(memeObjet);
+	if (gestEmprunts_.trouverElement(MemeObjet<const string>(matricule)))
+		return false;
+	return gestAbonnes_.retirerElement(trouverAbonne(matricule));
 };
 /*************************************************************************************
 * Fonction: Bibliotheque::trouverObjetEmpruntable
@@ -68,8 +64,7 @@ bool Bibliotheque::retirerAbonne(std::string& matricule){
 * Retour: (ObjetEmpruntable*) un pointeur d'un objet empruntable
 *************************************************************************************/
 ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(std::string& cote) const{
-	MemeObjet<ObjetEmpruntable, string> memeObjet(cote);
-	return gestObj_.trouverElement(memeObjet);
+	return gestObj_.trouverElement(MemeObjet<const string>(cote));
 };
 /************************************************************************************************************************
 * Fonction: Bibliotheque::ajouterObjetEmpruntable
@@ -87,13 +82,9 @@ bool Bibliotheque::ajouterObjetEmpruntable(ObjetEmpruntable* objet){
 * Retour: (bool) true si l'objet a ete retire, false sinon
 *******************************************************************************************************/
 bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
-	MemeObjet<ObjetEmpruntable, string> memeObjet(cote);
-	
-	if (gestObj_.trouverElement(memeObjet)->obtenirNbDisponibles() == gestObj_.trouverElement(memeObjet)->obtenirNbExemplaires()){
-		return gestObj_.retirerContenu(memeObjet);
-	}
-	else
+	if (!gestObj_.trouverElement(MemeObjet<const string>(cote)))
 		return false;
+	return gestObj_.retirerElement(trouverObjetEmpruntable(cote));
 };
 /****************************************************************************
 * Fonction: Bibliotheque::rechercherObjetEmpruntable
@@ -102,14 +93,10 @@ bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
 * Retour: aucun
 ****************************************************************************/
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
-	RechercheObjetEmpruntable predicatRecherche(str);
-	
-
-	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(predicatRecherche);
+	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(RechercheObjetEmpruntable(str));
 	std::list<ObjetEmpruntable*>::iterator pos;
 	if (listeObjets.size() != 0) {
-		TrieParTitre predicatTrie();
-		listeObjets.sort(predicatTrie);
+		listeObjets.sort(TrieParTitre());
 
 
 		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos)
@@ -134,12 +121,12 @@ bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned
 	unsigned int nLivresEmpruntes = 0;
 	bool estEmprunte = true;
 
-	gestObj_.trouverContenu(Empruntable(matricule, cote, nLivresEmpruntes, estEmprunte));
+	gestEmprunts_.trouverContenu(Empruntable(matricule, cote, nLivresEmpruntes, estEmprunte));
 
-	if (abonne->obtenirLimiteEmprunt() < nLivresEmpruntes && estEmprunte && objetEmpruntable->obtenirNbDisponibles() > 0 && 
+	if (abonne->obtenirLimiteEmprunt() > nLivresEmpruntes && (estEmprunte) && objetEmpruntable->obtenirNbDisponibles() > 0 && 
 		objetEmpruntable->obtenirAgeMinimal() <= abonne->obtenirAge()) {
 		Emprunt* emprunt = new Emprunt(matricule, objetEmpruntable, date);
-		gestEmprunts_.ajouterElement(emprunt);
+		estEmprunte = gestEmprunts_.ajouterElement(emprunt);
 		objetEmpruntable->modifierNbDisponibles((objetEmpruntable->obtenirNbDisponibles() - 1));
 	}
 	else
@@ -154,15 +141,14 @@ bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned
 * Retour: (bool) true le retour est fait, false sinon
 **********************************************************************************************/
 bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
-	pair<string, string>emprunt = {matricule, cote};
+	pair<const string, const string>emprunt (matricule, cote);
+	Emprunt* emprunt = gestEmprunts_.trouverElement(MemeObjet<pair<const string, const string>>(emprunt));
+	if (!emprunt)
+		return false;
+	ObjetEmpruntable* objet = trouverObjetEmpruntable(cote);
+	objet->modifierNbDisponibles((objet->modifierNbDisponibles() + 1));
+	return gestEmprunts_.retirerElement(emprunt);
 	
-	MemeObjet<Emprunt, pair<string,string>> memeObjet(emprunt);
-	
-	if (gestEmprunts_.trouverElement(memeObjet) != nullptr){
-		gestEmprunts_.retirerContenu(memeObjet);
-		gestObj_.trouverElement(memeObjet)->modifierNbDisponibles(gestObj_.trouverElement(memeObjet)->obtenirNbDisponibles() + 1);
-		return true;
-	}
 	
 };
 /*****************************************************************************************
@@ -172,33 +158,37 @@ bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
 * Retour: aucun
 *****************************************************************************************/
 void Bibliotheque::infoAbonne(std::string matricule) const{
-	
-	MemeObjet<Abonne, string> predicat(matricule);
-	//On doit vérifier que tous les vecteurs sont parcourus
-	Abonne* ab = gestAbonnes_.trouverElement(predicat);
+	Abonne* ab = this->trouverAbonne(matricule);
 
-	if (ab != nullptr)
-	{
-		if (typeid(*ab).name() == typeid(Abonne).name()) {
-			const Abonne  *abonne = dynamic_cast <const Abonne*> (ab);
-			cout << *abonne;
-		}
+	if (ab != nullptr) {
+
 		if (typeid(*ab).name() == typeid(Etudiant).name()) {
-			const Etudiant *etudiant = dynamic_cast <const Etudiant*> (ab);
+			Etudiant* etudiant = dynamic_cast <Etudiant*> (ab);
 			cout << *etudiant;
 		}
-		if (typeid(*ab).name() == typeid(EtudiantBaccalaureat).name()) {
-			const EtudiantBaccalaureat *etudiantBac = dynamic_cast <const EtudiantBaccalaureat*> (ab);
-			cout << *etudiantBac;
+
+		else if (typeid(*ab).name() == typeid(EtudiantBaccalaureat).name()) {
+			EtudiantBaccalaureat* etudiantBaccalaureat = dynamic_cast <EtudiantBaccalaureat*> (ab);
+			cout << *etudiantBaccalaureat;
 		}
-		if (typeid(*ab).name() == typeid(Professeur).name()) {
-			const Professeur *professeur = dynamic_cast <const Professeur*> (ab);
+
+		else if (typeid(*ab).name() == typeid(Professeur).name()) {
+			Professeur* professeur = dynamic_cast <Professeur*> (ab);
 			cout << *professeur;
 		}
+
+		else {
+
+			cout << *ab;
+		}
+
 	}
-	else
-	{
-		cout << "Abonne - " << matricule << " - non trouve" << endl;
+	map <string, Emprunt*> map = trierEmprunt(ab);
+	int compteur = 1;
+	cout << "LISTE DE LIVRE :" << endl;
+	for (auto itr = map.begin(); itr != map.end(); ++itr) {
+		std::cout << compteur << " - " << *(itr->second) << "\n";
+		compteur++;
 	}
 };
 /****************************************************************************************
@@ -265,14 +255,15 @@ std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
 * Retour: (map <string, Emprunt*>) la valeur de map
 ****************************************************************************************************/
 map<string, Emprunt*> Bibliotheque::trierEmprunt(Abonne * abonne) const{
-	MemeObjet <ObjetEmpruntable, string> memeObjet(abonne->obtenirMatricule());
+	string* matricule = new string(abonne->obtenirMatricule());
+	MemeObjet<Emprunt, string> predicat(matricule);
+	map<string, Emprunt*> map;
 
-	list <Emprunt*> listeEmprunts = gestEmprunts_.trouverContenu(memeObjet);
-	map <string, Emprunt*> map;
+	list<Emprunt*> listeEmprunt = gestEmprunts_.trouverContenu(predicat);
+	listeEmprunt.sort(); 
+	list<Emprunt*>::iterator itr;
+	for (itr = listeEmprunt.begin(); itr != listeEmprunt.end(); ++itr)
+		map.insert(make_pair((*itr)->obtenirObjetEmpruntable()->obtenirTitre(), *itr));
 
-	std::list<Emprunt*>::iterator pos;
-	for (pos = listeEmprunts.begin(); pos != listeEmprunts.end(); ++pos)
-		map.insert(make_pair((*pos)->obtenirObjetEmpruntable()->obtenirTitre(), *pos));
 	return map;
-
 };
