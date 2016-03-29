@@ -110,9 +110,9 @@ bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
 	
 };
 
-void Bibliotheque::infoAbonne(const std::string& matricule) const{
-	string* ptr = new string(matricule);
-	MemeObjet<Abonne, string> predicat(ptr);
+void Bibliotheque::infoAbonne(std::string& matricule) const{
+	
+	MemeObjet<Abonne, string> predicat(matricule);
 	//On doit vérifier que tous les vecteurs sont parcourus
 	Abonne* ab = gestAbonnes_.trouverElement(predicat);
 
