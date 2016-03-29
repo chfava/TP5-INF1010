@@ -71,10 +71,10 @@ T* trouverElement(predicate& condition)const {
 }
 
 
-bool trouverElement(T objet1)const {
+bool trouverElement(T* objet1)const {
 	std::list<T*>::const_iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (*pos == objet1){
+		if (*pos == *objet1){
 			return true;
 		}
 	}
@@ -82,11 +82,11 @@ bool trouverElement(T objet1)const {
 }
 
 template <typename predicate>
-std::list<T*> trouverContenu(predicate condition)const{
+std::list<T*> trouverContenu(predicate& condition)const{
 	std::list <T*> liste;
 	std::list<T*>::const_iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (condition){
+		if (condition(*pos)){
 			liste.push_back(*pos);
 		}
 	}

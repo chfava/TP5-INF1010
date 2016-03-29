@@ -19,10 +19,10 @@ class DetruireEmprunt
 {
 public:
 	DetruireEmprunt(){};
-	bool operator()(){
+	bool operator()(Emprunt* emprunt){
+		delete emprunt;
 		return true;
 	};
-private:
 
 };
 
