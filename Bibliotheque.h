@@ -1,10 +1,10 @@
-/*
-Fichier: Bibliotheque.h
-Auteur(s): Mohamed Amine Kibiche
-Date de creation:
-Date de modification: 25 février 2016
-Description: la classe qui fait le lien entre toutes les autres classes 
-*/
+/****************************************************************************
+* Fichier: Bibliotheque.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 27 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description de la classe Bibliotheque
+****************************************************************************/
 #ifndef BIBLIOTHEQUE_H
 #define BIBLIOTHEQUE_H
 
