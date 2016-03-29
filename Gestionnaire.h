@@ -50,13 +50,13 @@ public:
 	bool retirerContenu(predicate& condition) {
 	bool elementRetiré;
 	std::list<T*>::iterator pos;
-	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (condition(*pos)){
-			pos = listeObjets.erase(pos);
-			elementRetiré = true;
-		}
+	pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
+	if (*pos != nullptr){
+		listeObjets.erase(pos);
+		return true;
 	}
-	return elementRetiré;
+	else
+		return false;
 };
 
 template <typename predicate>
@@ -85,13 +85,12 @@ template <typename predicate>
 std::list<T*> trouverContenu(predicate& condition)const{
 	std::list <T*> liste;
 	std::list<T*>::const_iterator pos;
-	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (condition(*pos)){
+	do{
+		pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
 			liste.push_back(*pos);
-		}
-	}
+	} while (*pos != nullptr);
 	return liste;
-}
+};
 
 private: 
 	std::list <T*> listeObjets;
