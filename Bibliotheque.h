@@ -34,23 +34,23 @@ public:
 
 	Abonne* trouverAbonne(std::string& matricule) const;
 
-	ObjetEmpruntable* trouverObjetEmpruntable(std::string& cote) const;
+	ObjetEmpruntable* trouverObjetEmpruntable(const std::string& cote) const;
 
 	std::string obtenirClasseObjet(std::string const& cote) const;
 
 	bool ajouterAbonne(Abonne& abonne);
-	bool retirerAbonne(std::string& matricule);	
+	bool retirerAbonne(const std::string& matricule);
 
 	bool ajouterObjetEmpruntable(ObjetEmpruntable* objet);
 	
-	bool retirerObjetEmpruntable(std::string& cote);
+	bool retirerObjetEmpruntable(const std::string& cote);
 	void rechercherObjetEmpruntable(const std::string& str) const;
 
 	
-	bool emprunter(std::string& matricule, std::string& cote, unsigned int date);
-	bool retourner(std::string& matricule, std::string& cote);
+	bool emprunter(const std::string& matricule, const std::string& cote, unsigned int date);
+	bool retourner(const std::string& matricule, const std::string& cote);
 
-	void infoAbonne(std::string matricule) const;
+	void infoAbonne(const std::string matricule) const;
 
 	Bibliotheque& operator+=(Abonne* abonne);
 	Bibliotheque& operator+=(ObjetEmpruntable* obj);

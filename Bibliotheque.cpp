@@ -34,7 +34,7 @@ Bibliotheque::~Bibliotheque(){
 * Paramètres: - string matricule: un matricule à chercher dans le gestAbonnes_
 * Retour: (Abonne*) un pointeur d'abonne
 **********************************************************************************/
-Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
+Abonne* Bibliotheque::trouverAbonne(const std::string& matricule) const{
 	return gestAbonnes_.trouverElement(MemeObjet<const string>(matricule));
 };
 /*****************************************************************************************
@@ -52,7 +52,7 @@ bool Bibliotheque::ajouterAbonne(Abonne& abonne){
 * Paramètres: - string matricule: le matricule d'un abonne (OUT)
 * Retour: (bool) true si l'abonne a ete retire, false sinon
 ****************************************************************************/
-bool Bibliotheque::retirerAbonne(std::string& matricule){
+bool Bibliotheque::retirerAbonne(const std::string& matricule){
 	if (gestEmprunts_.trouverElement(MemeObjet<const string>(matricule)))
 		return false;
 	return gestAbonnes_.retirerElement(trouverAbonne(matricule));
@@ -63,7 +63,7 @@ bool Bibliotheque::retirerAbonne(std::string& matricule){
 * Paramètres: - string cote: une cote à trouver (OUT)
 * Retour: (ObjetEmpruntable*) un pointeur d'un objet empruntable
 *************************************************************************************/
-ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(std::string& cote) const{
+ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
 	return gestObj_.trouverElement(MemeObjet<const string>(cote));
 };
 /************************************************************************************************************************
@@ -81,7 +81,7 @@ bool Bibliotheque::ajouterObjetEmpruntable(ObjetEmpruntable* objet){
 * Paramètres: - string cote: la cote de l'objet empruntable a retirer (OUT)
 * Retour: (bool) true si l'objet a ete retire, false sinon
 *******************************************************************************************************/
-bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
+bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){
 	if (!gestObj_.trouverElement(MemeObjet<const string>(cote)))
 		return false;
 	return gestObj_.retirerElement(trouverObjetEmpruntable(cote));
@@ -114,7 +114,7 @@ void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
 *             - unsigned int date: la date de retour pour l'emprunt (IN)
 * Retour: (bool) true si l'emprunt est fait, false sinon
 *******************************************************************************************/
-bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned int date){
+bool Bibliotheque::emprunter(const std::string& matricule, const std::string& cote, unsigned int date){
 	Abonne* abonne = trouverAbonne(matricule);
 	ObjetEmpruntable* objetEmpruntable = trouverObjetEmpruntable(cote);
 	
@@ -140,7 +140,7 @@ bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned
 *             - string cote: la cote de l'objet empruntable qui est retourne
 * Retour: (bool) true le retour est fait, false sinon
 **********************************************************************************************/
-bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
+bool Bibliotheque::retourner(const std::string& matricule, const std::string& cote){
 	pair<const string, const string>emprunt (matricule, cote);
 	Emprunt* emprunt = gestEmprunts_.trouverElement(MemeObjet<pair<const string, const string>>(emprunt));
 	if (!emprunt)
@@ -157,7 +157,7 @@ bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
 * Paramètres: - string matricule: le matricule de l'abonne (OUT)
 * Retour: aucun
 *****************************************************************************************/
-void Bibliotheque::infoAbonne(std::string matricule) const{
+void Bibliotheque::infoAbonne(const std::string matricule) const{
 	Abonne* ab = this->trouverAbonne(matricule);
 
 	if (ab != nullptr) {
@@ -246,7 +246,7 @@ istream& operator>>(istream& in, const Bibliotheque& biblio){
 };
 
 std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
-
+	return trouverObjetEmpruntable(cote)->obtenirNomClasse();
 };
 /***************************************************************************************************
 * Fonction: Bibliotheuqe::trierEmprunt
