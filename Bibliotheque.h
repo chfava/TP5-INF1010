@@ -50,7 +50,7 @@ public:
 	bool emprunter(std::string& matricule, std::string& cote, unsigned int date);
 	bool retourner(std::string& matricule, std::string& cote);
 
-	void infoAbonne(const std::string& matricule) const;
+	void infoAbonne(std::string& matricule) const;
 
 	Bibliotheque& operator+=(Abonne* abonne);
 	Bibliotheque& operator+=(ObjetEmpruntable* obj);
