@@ -35,7 +35,7 @@ Bibliotheque::~Bibliotheque(){
 * Retour: (Abonne*) un pointeur d'abonne
 **********************************************************************************/
 Abonne* Bibliotheque::trouverAbonne(std::string& matricule) const{
-	MemeObjet<Abonne, string> memeObjet(matricule);
+	MemeObjet<string> memeObjet(matricule);
 	return gestAbonnes_.trouverElement(memeObjet);
 };
 /*****************************************************************************************
