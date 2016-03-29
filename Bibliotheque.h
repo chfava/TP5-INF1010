@@ -1,10 +1,10 @@
-/****************************************************************************
-* Fichier: Bibliotheque.h
-* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
-* Date de creation: 27 mars 2016
-* Date de modification: 28 mars 2016
-* Description: Description de la classe Bibliotheque
-****************************************************************************/
+/*
+Fichier: Bibliotheque.h
+Auteur(s): Mohamed Amine Kibiche
+Date de creation:
+Date de modification: 25 février 2016
+Description: la classe qui fait le lien entre toutes les autres classes 
+*/
 #ifndef BIBLIOTHEQUE_H
 #define BIBLIOTHEQUE_H
 
@@ -39,18 +39,18 @@ public:
 	std::string obtenirClasseObjet(const std::string & cote) const;
 
 	bool ajouterAbonne(Abonne& abonne);
-	bool retirerAbonne(const std::string& matricule);
+	bool retirerAbonne(std::string& matricule);	
 
 	bool ajouterObjetEmpruntable(ObjetEmpruntable* objet);
 	
-	bool retirerObjetEmpruntable(const std::string& cote);
+	bool retirerObjetEmpruntable(std::string& cote);
 	void rechercherObjetEmpruntable(const std::string& str) const;
 
 	
-	bool emprunter(const std::string& matricule, const std::string& cote, unsigned int date);
-	bool retourner(const std::string& matricule, const std::string& cote);
+	bool emprunter(std::string& matricule, std::string& cote, unsigned int date);
+	bool retourner(std::string& matricule, std::string& cote);
 
-	void infoAbonne(const std::string matricule) const;
+	void infoAbonne(std::string& matricule) const;
 
 	Bibliotheque& operator+=(Abonne* abonne);
 	Bibliotheque& operator+=(ObjetEmpruntable* obj);

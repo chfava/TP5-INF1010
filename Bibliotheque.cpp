@@ -52,7 +52,7 @@ bool Bibliotheque::ajouterAbonne(Abonne& abonne){
 * Paramètres: - string matricule: le matricule d'un abonne (OUT)
 * Retour: (bool) true si l'abonne a ete retire, false sinon
 ****************************************************************************/
-bool Bibliotheque::retirerAbonne(const std::string& matricule){
+bool Bibliotheque::retirerAbonne( std::string& matricule){
 	if (gestEmprunts_.trouverElement(MemeObjet<const string>(matricule)))
 		return false;
 	return gestAbonnes_.retirerElement(trouverAbonne(matricule));
@@ -63,7 +63,7 @@ bool Bibliotheque::retirerAbonne(const std::string& matricule){
 * Paramètres: - string cote: une cote à trouver (OUT)
 * Retour: (ObjetEmpruntable*) un pointeur d'un objet empruntable
 *************************************************************************************/
-ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable(const std::string& cote) const{
+ObjetEmpruntable* Bibliotheque::trouverObjetEmpruntable( const std::string& cote) const{
 	return gestObj_.trouverElement(MemeObjet<const string>(cote));
 };
 /************************************************************************************************************************
