@@ -1,10 +1,10 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Fichier: Professeur.h
-//	Auteur(s) : Charles - Olivier Favreau et Stéphanie Leclerc
-//	Date de creation : 10 mars 2016
-//	Date de modification : 10 mars 2016
-//Description : Définition de la classe Professeur
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+/****************************************************************************
+* Fichier: Professeur.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 10 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description de la classe Professeur
+****************************************************************************/
 #ifndef PROFESSEUR_H
 #define PROFESSEUR_H
 
