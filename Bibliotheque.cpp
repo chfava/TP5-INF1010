@@ -94,13 +94,13 @@ bool Bibliotheque::retirerObjetEmpruntable(const std::string& cote){
 ****************************************************************************/
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
 	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(RechercheObjetEmpruntable(str));
-	std::list<ObjetEmpruntable*>::iterator pos;
 	if (listeObjets.size() != 0) {
 		listeObjets.sort(TrieParTitre());
 
 
-		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos)
+		for (auto pos = listeObjets.begin(); pos != listeObjets.end(); pos++) {
 			cout << *(*pos) << endl;
+		}
 	}
 	else
 		cout << "Il n'y a pas d'objet empruntable dans la bibliotheque contenant " << str << endl; 
@@ -146,7 +146,7 @@ bool Bibliotheque::retourner(const std::string& matricule, const std::string& co
 	if (!emprunt)
 		return false;
 	ObjetEmpruntable* objet = trouverObjetEmpruntable(cote);
-	objet->modifierNbDisponibles((objet->modifierNbDisponibles() + 1));
+	objet->modifierNbDisponibles((objet->obtenirNbDisponibles() + 1));
 	return gestEmprunts_.retirerElement(emprunt);
 	
 	
@@ -158,37 +158,34 @@ bool Bibliotheque::retourner(const std::string& matricule, const std::string& co
 * Retour: aucun
 *****************************************************************************************/
 void Bibliotheque::infoAbonne(const std::string matricule) const{
-	Abonne* ab = this->trouverAbonne(matricule);
+	Abonne* ab = trouverAbonne(matricule);
 
-	if (ab != nullptr) {
+	if (ab != nullptr)
+	{
+		string classe = ab->obtenirNomClasse();
 
-		if (typeid(*ab).name() == typeid(Etudiant).name()) {
-			Etudiant* etudiant = dynamic_cast <Etudiant*> (ab);
-			cout << *etudiant;
+		if (classe.find("Abonne") != std::string::npos)
+			cout << dynamic_cast<Abonne&>(*ab) << endl;
+
+		else if (classe.find("Professeur") != string::npos)
+			cout << dynamic_cast<Professeur&>(*ab) << endl;
+
+
+		else if (classe.find("Etudiant") != string::npos)
+			cout << dynamic_cast<Etudiant&>(*ab) << endl;
+
+
+		else if (classe.find("EtudiantBaccalaureat") != string::npos)
+			cout << dynamic_cast<EtudiantBaccalaureat&>(*ab) << endl;
+
+		map<string, Emprunt*> mapEmprunts = trierEmprunt(ab);
+		for (auto pos = mapEmprunts.begin(); pos != mapEmprunts.end(); pos++) {
+			cout << *(pos->second) << endl;
 		}
-
-		else if (typeid(*ab).name() == typeid(EtudiantBaccalaureat).name()) {
-			EtudiantBaccalaureat* etudiantBaccalaureat = dynamic_cast <EtudiantBaccalaureat*> (ab);
-			cout << *etudiantBaccalaureat;
-		}
-
-		else if (typeid(*ab).name() == typeid(Professeur).name()) {
-			Professeur* professeur = dynamic_cast <Professeur*> (ab);
-			cout << *professeur;
-		}
-
-		else {
-
-			cout << *ab;
-		}
-
 	}
-	map <string, Emprunt*> map = trierEmprunt(ab);
-	int compteur = 1;
-	cout << "LISTE DE LIVRE :" << endl;
-	for (auto itr = map.begin(); itr != map.end(); ++itr) {
-		std::cout << compteur << " - " << *(itr->second) << "\n";
-		compteur++;
+	else
+	{
+		cout << "Abonne - " << matricule << " - non trouve" << endl;
 	}
 };
 /****************************************************************************************
@@ -245,7 +242,7 @@ istream& operator>>(istream& in, const Bibliotheque& biblio){
 	return in;
 };
 
-std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
+std::string Bibliotheque::obtenirClasseObjet(const std::string & cote) const{
 	return trouverObjetEmpruntable(cote)->obtenirNomClasse();
 };
 /***************************************************************************************************
@@ -255,15 +252,12 @@ std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
 * Retour: (map <string, Emprunt*>) la valeur de map
 ****************************************************************************************************/
 map<string, Emprunt*> Bibliotheque::trierEmprunt(Abonne * abonne) const{
-	string* matricule = new string(abonne->obtenirMatricule());
-	MemeObjet<Emprunt, string> predicat(matricule);
-	map<string, Emprunt*> map;
-
-	list<Emprunt*> listeEmprunt = gestEmprunts_.trouverContenu(predicat);
-	listeEmprunt.sort(); 
-	list<Emprunt*>::iterator itr;
-	for (itr = listeEmprunt.begin(); itr != listeEmprunt.end(); ++itr)
-		map.insert(make_pair((*itr)->obtenirObjetEmpruntable()->obtenirTitre(), *itr));
+	map<string, Emprunt*>map;
+	auto listeEmprunts = gestEmprunts_.trouverContenu(MemeObjet<const string>(abonne->obtenirMatricule()));
+	for (auto pos = listeEmprunts.begin(); pos != listeEmprunts.end(); ++pos)
+		map.insert(make_pair((*pos)->obtenirObjetEmpruntable()->obtenirTitre(), (*pos)));
+	return map;
+	
 
 	return map;
 };

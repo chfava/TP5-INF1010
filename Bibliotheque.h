@@ -36,7 +36,7 @@ public:
 
 	ObjetEmpruntable* trouverObjetEmpruntable(const std::string& cote) const;
 
-	std::string obtenirClasseObjet(std::string const& cote) const;
+	std::string obtenirClasseObjet(const std::string & cote) const;
 
 	bool ajouterAbonne(Abonne& abonne);
 	bool retirerAbonne(const std::string& matricule);
