@@ -47,7 +47,7 @@ public:
 
 	
 	bool emprunter(std::string& matricule, std::string& cote, unsigned int date);
-	bool retourner(const std::string& matricule, const std::string& cote);
+	bool retourner(std::string& matricule, std::string& cote);
 
 	void infoAbonne(const std::string& matricule) const;
 

@@ -75,35 +75,17 @@ bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned
 	bool 
 };
 
-bool Bibliotheque::retourner(const std::string& matricule, const std::string& cote){
-	int empruntPos = -1;
-	bool estRetourne = false;
-
-	for (unsigned int i = 0; i < vecEmprunts_.size(); i++)
-	{
-		if ((vecEmprunts_[i]->obtenirMatricule() == matricule) &&
-			(*(vecEmprunts_[i]->obtenirObjetEmpruntable()) == cote))
-			empruntPos = i;
+bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
+	pair<string, string>emprunt = {matricule, cote};
+	
+	MemeObjet<Emprunt, pair<string,string>> memeObjet(emprunt);
+	
+	if (gestEmprunts_.trouverElement(memeObjet) != nullptr){
+		gestEmprunts_.retirerContenu(memeObjet);
+		gestObj_.trouverElement(memeObjet)->modifierNbDisponibles(gestObj_.trouverElement(memeObjet)->obtenirNbDisponibles() + 1);
+		return true;
 	}
-
-
-	if (empruntPos != -1)
-	{
-		Emprunt* emprunt = vecEmprunts_[emPos];
-		ObjetEmpruntable* obj = emprunt->obtenirObjetEmpruntable();
-		Abonne* abonne = trouverAbonne(matricule);
-
-		estRetourne = abonne->estEmprunte(*obj);
-		if (estRetourne)
-		{
-			abonne->retirerEmprunt(obj);
-			vecEmprunts_[empruntPos] = vecEmprunts_.back();
-			vecEmprunts_.pop_back();
-			delete emprunt;
-			obj->modifierNbDisponibles(obj->obtenirNbDisponibles() + 1);
-		}
-	}
-	return estRetourne;
+	
 };
 
 void Bibliotheque::infoAbonne(const std::string& matricule) const{

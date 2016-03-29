@@ -14,8 +14,8 @@ public:
 		*objet1_ = objet1;
 	};
 
-	bool operator()(T& objet2){
-		return (objet2 == *objet1)
+	bool operator()(T* objet2){
+		return (*objet1 == *objet2)
 	}
 private:
 	P* objet1_;
