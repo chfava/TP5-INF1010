@@ -13,15 +13,16 @@
 class TrieParTitre
 {
 public:
-	TrieParTitre(ObjetEmpruntable& objet1):objet1_(objet1) {
-		
+	TrieParTitre() {};
+
+	bool operator()(const ObjetEmpruntable* objet1, const ObjetEmpruntable* objet2){
+		std::string titre1 = objet1->obtenirTitre();
+		std::string titre2 = objet2->obtenirTitre();
+		objet1->convertirMinuscule(titre1);
+		objet2->convertirMinuscule(titre2);
+
+		return (titre1 < titre2);
 	};
-	bool operator()(ObjetEmpruntable& objet2){
-		return !(objet1_.obtenirTitre().compare(objet2.obtenirTitre()));
-	};
-	
-private:
-	ObjetEmpruntable& objet1_;
 };
 
 
