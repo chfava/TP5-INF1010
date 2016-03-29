@@ -74,12 +74,12 @@ public:
 	bool retirerContenu(predicate& condition) {
 	bool elementRetiré;
 	std::list<T*>::iterator pos;
-	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (condition(*pos)){
-			pos = listeObjets.erase(pos);
-			elementRetiré = true;
-		}
+	pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
+	if (*pos != nullptr){
+		listeObjets.erase(pos);
+		return true;
 	}
+<<<<<<< HEAD
 	return elementRetiré;
 <<<<<<< HEAD
 	};
@@ -113,6 +113,10 @@ public:
 				return true;
 			}
 =======
+=======
+	else
+		return false;
+>>>>>>> origin/master
 };
 
 template <typename predicate>
@@ -127,10 +131,10 @@ T* trouverElement(predicate& condition)const {
 }
 
 
-bool trouverElement(T objet1)const {
+bool trouverElement(T* objet1)const {
 	std::list<T*>::const_iterator pos;
 	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (*pos == objet1){
+		if (*pos == *objet1){
 			return true;
 >>>>>>> origin/master
 		}
@@ -156,16 +160,22 @@ bool trouverElement(T objet1)const {
 }
 
 template <typename predicate>
-std::list<T*> trouverContenu(predicate condition)const{
+std::list<T*> trouverContenu(predicate& condition)const{
 	std::list <T*> liste;
 	std::list<T*>::const_iterator pos;
-	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (condition){
+	do{
+		pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
 			liste.push_back(*pos);
+<<<<<<< HEAD
 >>>>>>> origin/master
 		}
 		return liste;
 	}
+=======
+	} while (*pos != nullptr);
+	return liste;
+};
+>>>>>>> origin/master
 
 private: 
 	std::list <T*> listeObjets;
