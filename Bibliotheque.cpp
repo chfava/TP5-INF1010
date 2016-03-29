@@ -116,7 +116,7 @@ void Bibliotheque::infoAbonne(const std::string& matricule) const{
 			const Etudiant *etudiant = dynamic_cast <const Etudiant*> (ab);
 			cout << *etudiant;
 		}
-		if (typeid(*ab).name() == typdeid(EtudiantBaccalaureat).name()) {
+		if (typeid(*ab).name() == typeid(EtudiantBaccalaureat).name()) {
 			const EtudiantBaccalaureat *etudiantBac = dynamic_cast <const EtudiantBaccalaureat*> (ab);
 			cout << *etudiantBac;
 		}
