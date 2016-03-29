@@ -23,35 +23,28 @@ public:
 
 	~Gestionnaire() {};
 
-
+	template <typename T>
 	bool ajouterElement(T* objet) {
-		std::list<T*>::iterator pos;
-		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-			if (*pos == objet){
-				return false;
-			}
+		if (std::find(listeObjets.begin(), listeObjets.end(), objet) == listeObjets.end()){
+			listeObjets.push_back(objet);
+			return true;
 		}
-		listeObjets.push_back(objet);
-		return true;
+		else
+			return false;
 	};
 
+	template <typename T>
 	bool retirerElement(T* objet) {
-		std::list<T*>::iterator pos;
-		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-			if (*pos == objet){
-				pos = listeObjets.erase(pos);
-				return true;
-			}
-		}
-		return false;
+		return listeObjets.remove(objet);
 	};
 
-	template <typename predicate>
+
+	template <typename T, typename predicate>
 	bool retirerContenu(predicate& condition) {
 	bool elementRetiré;
 	std::list<T*>::iterator pos;
-	pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
-	if (*pos != nullptr){
+	pos = std::find_if(listeObjets.begin(), listeObjets.end(), condition);
+	if (pos != listeObjets.end()){
 		listeObjets.erase(pos);
 		return true;
 	}
@@ -59,10 +52,9 @@ public:
 		return false;
 };
 
-template <typename predicate>
+template <typename T, typename predicate>
 T* trouverElement(predicate& condition)const {
-	std::list<T*>::const_iterator pos;
-	pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
+	auto pos = std::find_if(listeObjets.begin(), listeObjets.end(), condition);
 	if (pos != listeObjets.end())
 		return *pos;
 	else
@@ -70,25 +62,23 @@ T* trouverElement(predicate& condition)const {
 	
 }
 
-
-bool trouverElement(T* objet1)const {
-	std::list<T*>::const_iterator pos;
-	for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos) {
-		if (*pos == *objet1){
+template<typename T>
+bool trouverElement(T& objet1)const {
+	auto pos = std::find(listeObjets.begin(), listeObjets.end(), objet1)
+	{
+		if (pos != listeObjets.end()){
 			return true;
 		}
 	}
 	return false;
 }
 
-template <typename predicate>
+
+template <typename T, typename predicate>
 std::list<T*> trouverContenu(predicate& condition)const{
 	std::list <T*> liste;
-	std::list<T*>::const_iterator pos;
-	do{
-		pos = find_if(listeObjets.begin(), listeObjets.end(), condition);
-			liste.push_back(*pos);
-	} while (*pos != nullptr);
+	std::copy_if(listeObjets.begin(), listeObjets.end(), back_inserter(liste) ,condition);
+		
 	return liste;
 };
 
