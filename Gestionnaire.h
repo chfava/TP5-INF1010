@@ -61,6 +61,7 @@ T* trouverElement(predicate& condition)const {
 		}
 	}
 	return nullptr;
+	
 }
 
 bool trouverElement(T objet)const {

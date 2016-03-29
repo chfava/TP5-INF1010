@@ -51,13 +51,6 @@ bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
 
 
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
-<<<<<<< HEAD
-	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(RechercheObjetEmpruntable(str));
-	std::list<ObjetEmpruntable*>::iterator pos;
-	if (listeObjets.size() != 0) {
-
-		listeObjets.sort(TrieParTitre());
-=======
 	RechercheObjetEmpruntable predicatRecherche(str);
 	
 
@@ -66,7 +59,7 @@ void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
 	if (listeObjets.size() != 0) {
 		TrieParTitre predicatTrie();
 		listeObjets.sort(predicatTrie);
->>>>>>> origin/master
+
 
 		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos)
 			cout << *(*pos) << endl;
