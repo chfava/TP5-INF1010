@@ -10,9 +10,6 @@
 
 #include "ObjetEmpruntable.h"
 
-
-
-
 class TrieParTitre
 {
 public:
