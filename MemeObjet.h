@@ -13,16 +13,16 @@
 
 using namespace std;
 
-template<typename T, typename P>
+template<typename P>
 class MemeObjet{
 
 public:
-	MemeObjet(P& objet1){
-		*objet1_ = objet1;
+	MemeObjet(P& objet1): objet1_(&objet1){
 	};
-
+	template<typename P>
+	template<typename T>
 	bool operator()(T* objet2){
-		return (*objet1 == *objet2)
+		return (*objet1_ == *objet2)
 	}
 private:
 	P* objet1_;

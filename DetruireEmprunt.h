@@ -19,9 +19,9 @@ class DetruireEmprunt
 {
 public:
 	DetruireEmprunt(){};
-	bool operator()(Emprunt* emprunt){
-		delete emprunt;
-		return true;
+	void operator()(Emprunt* emprunt){
+		if (emprunt!=nullptr)
+			delete emprunt;
 	};
 
 };
