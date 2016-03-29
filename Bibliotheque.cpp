@@ -72,18 +72,18 @@ bool Bibliotheque::emprunter(std::string& matricule, std::string& cote, unsigned
 	ObjetEmpruntable* objetEmpruntable = trouverObjetEmpruntable(cote);
 	
 	unsigned int nLivresEmpruntes = 0;
-	bool peutEmprunte = true;
+	bool estEmprunte = true;
 
-	gestObj_.trouverContenu(Empruntable(matricule, cote, nLivresEmpruntes, peutEmprunte));
+	gestObj_.trouverContenu(Empruntable(matricule, cote, nLivresEmpruntes, estEmprunte));
 
-	if (abonne->obtenirLimiteEmprunt() < nLivresEmpruntes && peutEmprunte && objetEmpruntable->obtenirNbDisponibles() > 0 && objetEmpruntable->obtenirAgeMinimal() <= abonne->obtenirAge()) {
+	if (abonne->obtenirLimiteEmprunt() < nLivresEmpruntes && estEmprunte && objetEmpruntable->obtenirNbDisponibles() > 0 && objetEmpruntable->obtenirAgeMinimal() <= abonne->obtenirAge()) {
 		Emprunt* emprunt = new Emprunt(matricule, objetEmpruntable, date);
 		gestEmprunts_.ajouterElement(emprunt);
 		objetEmpruntable->modifierNbDisponibles((objetEmpruntable->obtenirNbDisponibles() - 1));
 	}
 	else
-		peutEmprunte = false;
-	return peutEmprunte;
+		estEmprunte = false;
+	return estEmprunte;
 };
 
 bool Bibliotheque::retourner(std::string& matricule, std::string& cote){
