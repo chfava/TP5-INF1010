@@ -51,17 +51,59 @@ bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
 
 
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
-	RechercheObjetEmpruntable foncteur;
+	RechercheObjetEmpruntable predicatRecherche(str);
+	TrieParTitre predicatTrie;
+
+	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(predicatRecherche);
+	std::list<T*>::iterator pos;
+	if (listeObjets.size() != 0) {
+
+		listeObjets.sort(predicatTrie);
+
+		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos)
+			cout << *(*pos) << endl; 
+	}
 
 };
 
 
 bool Bibliotheque::emprunter(const std::string& matricule, const std::string& cote, unsigned int date){
+	Abonne* abonne = trouverAbonne(matricule);
 
+	ObjetEmpruntable* objetEmpruntable = trouverObjetEmpruntable(cote);
+
+	bool 
 };
 
 bool Bibliotheque::retourner(const std::string& matricule, const std::string& cote){
+	int empruntPos = -1;
+	bool estRetourne = false;
 
+	for (unsigned int i = 0; i < vecEmprunts_.size(); i++)
+	{
+		if ((vecEmprunts_[i]->obtenirMatricule() == matricule) &&
+			(*(vecEmprunts_[i]->obtenirObjetEmpruntable()) == cote))
+			empruntPos = i;
+	}
+
+
+	if (empruntPos != -1)
+	{
+		Emprunt* emprunt = vecEmprunts_[emPos];
+		ObjetEmpruntable* obj = emprunt->obtenirObjetEmpruntable();
+		Abonne* abonne = trouverAbonne(matricule);
+
+		estRetourne = abonne->estEmprunte(*obj);
+		if (estRetourne)
+		{
+			abonne->retirerEmprunt(obj);
+			vecEmprunts_[empruntPos] = vecEmprunts_.back();
+			vecEmprunts_.pop_back();
+			delete emprunt;
+			obj->modifierNbDisponibles(obj->obtenirNbDisponibles() + 1);
+		}
+	}
+	return estRetourne;
 };
 
 void Bibliotheque::infoAbonne(const std::string& matricule) const{
@@ -100,5 +142,14 @@ std::string Bibliotheque::obtenirClasseObjet(std::string const& cote) const{
 };
 
 map<string, Emprunt*> Bibliotheque::trierEmprunt(Abonne * abonne) const{
+	MemeObjet <ObjetEmpruntable, string> memeObjet(abonne->obtenirMatricule());
+
+	list <Emprunt*> listeEmprunts = gestEmprunts_.trouverContenu(memeObjet);
+	map <string, Emprunt*> map;
+
+	std::list<Emprunt*>::iterator pos;
+	for (pos = listeEmprunts.begin(); pos != listeEmprunts.end(); ++pos)
+		map.insert(make_pair((*pos)->obtenirObjetEmpruntable()->obtenirTitre(), *pos));
+	return map;
 
 };
