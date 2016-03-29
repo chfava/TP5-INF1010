@@ -51,11 +51,22 @@ bool Bibliotheque::retirerObjetEmpruntable(std::string& cote){
 
 
 void Bibliotheque::rechercherObjetEmpruntable(const std::string& str) const{
+<<<<<<< HEAD
 	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(RechercheObjetEmpruntable(str));
 	std::list<ObjetEmpruntable*>::iterator pos;
 	if (listeObjets.size() != 0) {
 
 		listeObjets.sort(TrieParTitre());
+=======
+	RechercheObjetEmpruntable predicatRecherche(str);
+	
+
+	list <ObjetEmpruntable*> listeObjets = gestObj_.trouverContenu(predicatRecherche);
+	std::list<ObjetEmpruntable*>::iterator pos;
+	if (listeObjets.size() != 0) {
+		TrieParTitre predicatTrie();
+		listeObjets.sort(predicatTrie);
+>>>>>>> origin/master
 
 		for (pos = listeObjets.begin(); pos != listeObjets.end(); ++pos)
 			cout << *(*pos) << endl;
@@ -115,7 +126,7 @@ void Bibliotheque::infoAbonne(const std::string& matricule) const{
 			const Etudiant *etudiant = dynamic_cast <const Etudiant*> (ab);
 			cout << *etudiant;
 		}
-		if (typeid(*ab).name() == typdeid(EtudiantBaccalaureat).name()) {
+		if (typeid(*ab).name() == typeid(EtudiantBaccalaureat).name()) {
 			const EtudiantBaccalaureat *etudiantBac = dynamic_cast <const EtudiantBaccalaureat*> (ab);
 			cout << *etudiantBac;
 		}
