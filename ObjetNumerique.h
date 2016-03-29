@@ -1,3 +1,10 @@
+/****************************************************************************
+* Fichier: ObjetNumerique.h
+* Auteur(s): Charles-Olivier Favreau et Stéphanie Leclerc
+* Date de creation: 10 mars 2016
+* Date de modification: 28 mars 2016
+* Description: Description de la classe ObjetNumerique
+****************************************************************************/
 #ifndef	OBJETNUMERIQUE_H
 #define OBJETNUMERIQUE_H
 
